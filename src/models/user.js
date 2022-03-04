@@ -46,7 +46,7 @@ const bcrypt = require('bcrypt');
     profilePicture:{type:String}
 },{timestamps:true});
  
-  userSchema.virtual('password')
+userSchema.virtual('password')
  .set(function(password){
     this.hash_password = bcrypt.hashSync(password,10);
  });
