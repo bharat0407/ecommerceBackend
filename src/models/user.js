@@ -45,14 +45,20 @@ const bcrypt = require('bcrypt');
     },
     profilePicture:{type:String}
 },{timestamps:true});
- 
+
+userSchema.method({
+    auhtenticate:function(password){
+        return bcrypt.compare(password,this.hash_password);
+    }
+})
+
+userSchema.virtual('fullName')
+.get(function(){
+      return `${this.firstName}${this.lastName}`;
+});
+
 userSchema.virtual('password')
  .set(function(password){
     this.hash_password = bcrypt.hashSync(password,10);
  });
- userSchema.methods ={
-     auhtenticate:function(password){
-         return bcrypt.compare(password,this.hash_password);
-     }
- } 
 module.exports = mongoose.model('user',userSchema);

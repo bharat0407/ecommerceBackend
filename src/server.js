@@ -3,6 +3,7 @@ const app = express();
 const env = require('dotenv');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/user');
+const adminRoutes = require('./routes/admin/user');
 //environment configuration
 env.config();
 // Database connection
@@ -18,6 +19,7 @@ mongoose
 app.use(express.json());
 
 app.use('/api', authRoutes);
+app.use('/api', adminRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`server is running on port:${process.env.PORT}`);
