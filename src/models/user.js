@@ -38,7 +38,7 @@ const bcrypt = require('bcrypt');
     role:{
        type:String,
        enum:['user','admin'],
-       default:'admin'
+       default:'user'
     },
     conatctNo:{
         type:String

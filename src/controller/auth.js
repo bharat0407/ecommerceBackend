@@ -1,22 +1,25 @@
 const req = require('express/lib/request');
 const res = require('express/lib/response');
 const User = require('../models/user');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator');
 
 exports.signup = (req, res) => {
+
     const { firstName, lastName, email, password } = req.body;
     console.log(req.body);
-    if (
-        isEmpty(email) ||
-        isEmpty(password) ||
-        isEmpty(firstName) ||
-        isEmpty(lastName)
-    ) {
-        return res.status(400).json({
-            message:
-                'Insufficient data provided. Please provide email, password and firstName',
-        });
-    }
+    // if (
+    //     isEmpty(email) ||
+    //     isEmpty(password) ||
+    //     isEmpty(firstName) ||
+    //     isEmpty(lastName)
+    // ) {
+    //     return res.status(400).json({
+    //         message:
+    //             'Insufficient data provided. Please provide email, password and firstName',
+    //     });
+    // }
+
 
     User.findOne({ email: email }).exec((error, user) => {
         if (user) {
@@ -75,11 +78,5 @@ exports.signin = (req, res) => {
         });
 }
 
- exports.requiresign = (req,res,next)=>{
-     const token = req.headers.authorization.split(' ')[1];
-     //console.log(token);
-     const user = jwt.verify(token,process.env.JWT_SECRET);
-     req.user = user;
-     next();
- }
+ 
 

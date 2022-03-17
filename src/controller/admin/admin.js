@@ -1,7 +1,7 @@
 const req = require('express/lib/request');
 const res = require('express/lib/response');
 const User = require('../../models/user');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
 exports.signup = (req, res) => {
     const { firstName, lastName, email, password } = req.body;
@@ -61,7 +61,7 @@ exports.signin = (req, res) => {
                 console.log(user.auhtenticate, user);
                 console.log( user instanceof User);
                 if (user.auhtenticate(req.body.password)&& user.role ==='admin') {
-                    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                    const token = jwt.sign({ _id: user._id,role:user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
                     const { _id, firstName, lastName, email, password, role, fullName } = user;
                     res.status(200).json({
                         token,
@@ -76,11 +76,4 @@ exports.signin = (req, res) => {
         });
 }
 
- exports.requiresign = (req,res,next)=>{
-     const token = req.headers.authorization.split(' ')[1];
-     //console.log(token);
-     const user = jwt.verify(token,process.env.JWT_SECRET);
-     req.user = user;
-     next();
- }
 
