@@ -63,7 +63,7 @@ exports.signin = (req, res) => {
                 console.log(user.auhtenticate, user);
                 console.log( user instanceof User);
                 if (user.auhtenticate(req.body.password)) {
-                    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                    const token = jwt.sign({ _id: user._id,role:user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
                     const { _id, firstName, lastName, email, password, role, fullName } = user;
                     res.status(200).json({
                         token,
